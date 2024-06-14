@@ -4,6 +4,17 @@ info:
   version: 1.0.0
 paths:
   /pokemon:
+    get:
+      summary: Get all Pokemon
+      responses:
+        '200':
+          description: A list of all Pokemon
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pokemon'
     post:
       summary: Create a new Pokemon
       requestBody:
@@ -11,68 +22,37 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                Name:
-                  type: string
-                Type 1:
-                  type: string
-                Type 2:
-                  type: string
-                Total:
-                  type: integer
-                HP:
-                  type: integer
-                Attack:
-                  type: integer
-                Defense:
-                  type: integer
-                Sp. Atk:
-                  type: integer
-                Sp. Def:
-                  type: integer
-                Speed:
-                  type: integer
-                Generation:
-                  type: integer
-                Legendary:
-                  type: boolean
+              $ref: '#/components/schemas/Pokemon'
       responses:
         '201':
           description: The created Pokemon
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  #:
-                    type: integer
-                  Name:
-                    type: string
-                  Type 1:
-                    type: string
-                  Type 2:
-                    type: string
-                  Total:
-                    type: integer
-                  HP:
-                    type: integer
-                  Attack:
-                    type: integer
-                  Defense:
-                    type: integer
-                  Sp. Atk:
-                    type: integer
-                  Sp. Def:
-                    type: integer
-                  Speed:
-                    type: integer
-                  Generation:
-                    type: integer
-                  Legendary:
-                    type: boolean
+                $ref: '#/components/schemas/Pokemon'
         '400':
           description: Missing fields
+  /pokemon/{id}/attackStrength:
+    get:
+      summary: Get the attack strength of a Pokemon by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The attack strength of the Pokemon
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  attackStrength:
+                    type: integer
+        '404':
+          description: Pokemon not found
   /pokemon/type/{type}:
     get:
       summary: Get Pokemon by type
@@ -90,33 +70,50 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    #:
-                      type: integer
-                    Name:
-                      type: string
-                    Type 1:
-                      type: string
-                    Type 2:
-                      type: string
-                    Total:
-                      type: integer
-                    HP:
-                      type: integer
-                    Attack:
-                      type: integer
-                    Defense:
-                      type: integer
-                    Sp. Atk:
-                      type: integer
-                    Sp. Def:
-                      type: integer
-                    Speed:
-                      type: integer
-                    Generation:
-                      type: integer
-                    Legendary:
-                      type: boolean
+                  $ref: '#/components/schemas/Pokemon'
         '404':
-          description: No Pokemon of the specified type found
+          description: No Pokemon of this type found
+components:
+  schemas:
+    Pokemon:
+      type: object
+      properties:
+        '#':
+          type: integer
+        Name:
+          type: string
+        'Type 1':
+          type: string
+        'Type 2':
+          type: string
+        Total:
+          type: integer
+        HP:
+          type: integer
+        Attack:
+          type: integer
+        Defense:
+          type: integer
+        'Sp. Atk':
+          type: integer
+        'Sp. Def':
+          type: integer
+        Speed:
+          type: integer
+        Generation:
+          type: integer
+        Legendary:
+          type: boolean
+      required:
+        - Name
+        - 'Type 1'
+        - 'Type 2'
+        - Total
+        - HP
+        - Attack
+        - Defense
+        - 'Sp. Atk'
+        - 'Sp. Def'
+        - Speed
+        - Generation
+        - Legendary
