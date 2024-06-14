@@ -32,9 +32,16 @@ paths:
                 $ref: '#/components/schemas/Pokemon'
         '400':
           description: Missing fields
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   /pokemon/{id}/attack-strength:
     get:
-      summary: Get the attack strength of a Pokemon by ID
+      summary: Get the attack strength of a Pokemon
       parameters:
         - name: id
           in: path
@@ -52,10 +59,17 @@ paths:
                   attackStrength:
                     type: integer
         '404':
-          description: Pokemon not found
+          description: Pokemon ID not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   /pokemon/type/{type}:
     get:
-      summary: Get Pokemon by type
+      summary: Get Pokemon of a specific type
       parameters:
         - name: type
           in: path
@@ -72,7 +86,14 @@ paths:
                 items:
                   $ref: '#/components/schemas/Pokemon'
         '404':
-          description: No Pokemon of this type found
+          description: No Pokemon of this type were found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
 components:
   schemas:
     Pokemon:
@@ -104,16 +125,3 @@ components:
           type: integer
         Legendary:
           type: boolean
-      required:
-        - Name
-        - 'Type 1'
-        - 'Type 2'
-        - Total
-        - HP
-        - Attack
-        - Defense
-        - 'Sp. Atk'
-        - 'Sp. Def'
-        - Speed
-        - Generation
-        - Legendary
