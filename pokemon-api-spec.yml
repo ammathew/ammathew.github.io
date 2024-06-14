@@ -32,7 +32,7 @@ paths:
                 $ref: '#/components/schemas/Pokemon'
         '400':
           description: Missing fields
-  /pokemon/{id}/attackStrength:
+  /pokemon/{id}/attack-strength:
     get:
       summary: Get the attack strength of a Pokemon by ID
       parameters:
